@@ -1,2 +1,3 @@
-# TestAssignment
-Test Assignment for new devs
+Проект создан на версии Unity 2021.3.16f
+
+Все инструкции находятся внутри прооекта
