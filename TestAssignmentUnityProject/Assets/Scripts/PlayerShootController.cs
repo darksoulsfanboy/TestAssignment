@@ -9,8 +9,18 @@ public class PlayerShootController : MonoBehaviour
     [SerializeField] private GameObject bulletPrefab;
     [SerializeField] private Transform shootPoint;
     [SerializeField] private Transform rotationPoint;
+    [SerializeField] private ParticleSystem particle;
+    [SerializeField] private AudioClip fireSound;
+
+    private AudioSource audio;
 
     public UnityEvent OnShoot;
+
+    private void Start()
+    {
+        audio = GetComponent<AudioSource>();
+    }
+
     public void Update()
     {
         RotateTowardsMouse();
@@ -32,8 +42,13 @@ public class PlayerShootController : MonoBehaviour
     
     private void Shoot()
     {
-        Instantiate(bulletPrefab, shootPoint.position, rotationPoint.rotation);
-        
+        var bullet = Instantiate(bulletPrefab, shootPoint.position, rotationPoint.rotation);
+        var bulletParticle = Instantiate(particle, shootPoint.position, particle.transform.rotation);
+
+        bulletParticle.transform.parent = bullet.transform;
+
+        audio.PlayOneShot(fireSound);
+
         OnShoot.Invoke();
     }
 }
